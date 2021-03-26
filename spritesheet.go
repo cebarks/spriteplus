@@ -145,9 +145,9 @@ func BuildRuntimeSpriteSheet(pics []*pixel.PictureData) (SpriteSheet, error) {
 		}
 	}
 
-	sheet := &RuntimeSpriteSheet{
+	sheet := RuntimeSpriteSheet{
 		packr: packr,
 	}
 
-	return sheet, nil
+	return &sheet, nil
 }

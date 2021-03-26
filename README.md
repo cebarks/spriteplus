@@ -50,7 +50,7 @@ This is the same as a `BasicSpriteSheet` except the `GetSprite()` method uses a 
 
 ### Todo Sheet Types
 #### `RuntimeSpriteSheet`
-Uses [pixelutils](https://github.com/dusk125/pixelutils)
+Uses [pixelutils'](https://github.com/dusk125/pixelutils) [packer](https://github.com/dusk125/pixelutils/wiki/Texture-Sprite-Packer) package to allow a spritesheet to be packed and created at runtime from a slice of `*pixel.PictureData`.
 
 ---
 
