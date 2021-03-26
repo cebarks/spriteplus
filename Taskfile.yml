@@ -16,3 +16,8 @@ tasks:
     desc: run all tests verbosely (with coverage)
     cmds:
       - go test ./... -cover -covermode atomic -v
+
+  todo:
+    desc: find all //TODO comments in the repo
+    cmds:
+      - grep -nr --exclude="Taskfile.yml" --exclude-dir=".git" "//TODO" . 
