@@ -136,10 +136,10 @@ func (rss *RuntimeSpriteSheet) GetSprite(id interface{}) *pixel.Sprite {
 
 //BuildRuntimeSpriteSheet will build a spritesheet from the supplied []*pixel.PictureData. The ids will be assigned in order
 func BuildRuntimeSpriteSheet(pics []*pixel.PictureData) (SpriteSheet, error) {
-	packr := packer.NewPacker(0, 0, packer.OptimizeOnInsert|packer.AllowGrowth)
+	packr := packer.NewPacker(0, 0, packer.AllowGrowth)
 
 	for _, pic := range pics { //TODO make optionally concurrent
-		err := packr.InsertPictureData(packr.GenerateId(), pic) //TODO waiting on https://github.com/dusk125/pixelutils/pull/1
+		err := packr.InsertPictureDataV(packr.GenerateId(), pic, packer.OptimizeOnInsert) //TODO waiting on https://github.com/dusk125/pixelutils/pull/1
 		if err != nil {
 			return nil, err
 		}
