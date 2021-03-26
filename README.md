@@ -48,9 +48,18 @@ The sprites on the sheet must all be square, of the same size, and aligned neatl
 #### `CachedSpriteSheet`
 This is the same as a `BasicSpriteSheet` except the `GetSprite()` method uses a map to cache the `*pixel.Sprite` that are created instead of a new one being created every time the method is called.
 
-### Todo Sheet Types
 #### `RuntimeSpriteSheet`
 Uses [pixelutils'](https://github.com/dusk125/pixelutils) [packer](https://github.com/dusk125/pixelutils/wiki/Texture-Sprite-Packer) package to allow a spritesheet to be packed and created at runtime from a slice of `*pixel.PictureData`.
+
+---
+
+## TODO Features
+- `Animation`:
+  - an animation represents a multi-frame animation.
+  - `BasicAnimation`: 
+    - an `Animation` built from a slice of `*pixel.Sprite`
+  - `SheetAnimation`: 
+    - an `Animation` built from a slice of IDs of a sprite sheet
 
 ---
 
