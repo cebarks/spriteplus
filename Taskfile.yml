@@ -1,0 +1,18 @@
+# https://taskfile.dev
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task -l
+    silent: true
+
+  test:
+    desc: run all tests
+    cmds:
+      - go test ./...
+
+  testv:
+    desc: run all tests verbosely (with coverage)
+    cmds:
+      - go test ./... -cover -covermode atomic -v
