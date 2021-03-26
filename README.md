@@ -11,11 +11,19 @@ go get github.com/cebarks/spriteplus
 ```golang
 import "github.com/cebarks/spriteplus"
 
-func main() {
-    sheet := spriteplus.NewBasicSheet(8, 8, 16, 16, "my-16x16-spritesheet.png")
+sheet := spriteplus.NewBasicSheet(2, 2, 4, 4, "4px-2x2-small.png")
 
-    sprite := sheet.GetSprite(0)
-}
+//These can be directly drawn to a pixel.Target
+sprite1 := sheet.GetSprite(0) //bottom-left
+sprite2 := sheet.GetSprite(1) //bottom-right
+sprite3 := sheet.GetSprite(2) //top-left
+sprite4 := sheet.GetSprite(3) //top-right
+
+// or you can draw them to a batch using sheet.SourcePic()
+pic := sheet.SourcePic()
+batch := pixel.NewBatch(&pixel.TrianglesData{}, pic)
+
+sprite1.Draw(batch, pixel.IM)
 
 ```
 
