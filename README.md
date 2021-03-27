@@ -16,8 +16,10 @@ spriteplus is a golang library meant to be used along side the great [Pixel](htt
 import "github.com/cebarks/spriteplus"
 ```
 
+### Sprite Sheets
+
 ```golang
-//
+//Create your sheet
 sheet := spriteplus.NewBasicSheet(2, 2, 4, 4, "4px-2x2-small.png")
 sheet := spriteplus.NewCachedSheet(2, 2, 4, 4, "4px-2x2-small.png")
 
@@ -40,7 +42,6 @@ sprite4.Draw(batch, pixel.IM)
 batch.Draw(...
 ```
 
-### Sprite Sheets
 #### `BasicSpriteSheet`
 This is the most basic implementation of a sprite sheet. It has not bells or whistles.
 The sprites on the sheet must all be square, of the same size, and aligned neatly to a grid.
