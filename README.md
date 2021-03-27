@@ -40,10 +40,11 @@ sprite4.Draw(batch, pixel.IM)
 batch.Draw(...
 ```
 
-### Sheet Types
+### Sprite Sheets
 #### `BasicSpriteSheet`
 This is the most basic implementation of a sprite sheet. It has not bells or whistles.
 The sprites on the sheet must all be square, of the same size, and aligned neatly to a grid.
+**This is nothing more than the bare minimum to implement a functional `SpriteSheet`, a `CachedSpriteSheet` should almost always be prefered.**
 
 #### `CachedSpriteSheet`
 This is the same as a `BasicSpriteSheet` except the `GetSprite()` method uses a map to cache the `*pixel.Sprite` that are created instead of a new one being created every time the method is called.
@@ -59,7 +60,7 @@ Uses [pixelutils'](https://github.com/dusk125/pixelutils) [packer](https://githu
   - `BasicAnimation`: 
     - an `Animation` built from a slice of `*pixel.Sprite`
   - `SheetAnimation`: 
-    - an `Animation` built from a slice of IDs of a sprite sheet
+    - an `Animation` built from a slice of IDs from and graphically backed by a sprite sheets
 
 ---
 

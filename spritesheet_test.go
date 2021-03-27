@@ -61,10 +61,9 @@ func Test_BasicGetSprite(t *testing.T) {
 //TODO figure out how to test GetSprite properly
 func Test_CachedGetSprite(t *testing.T) {
 	ss, _ := MakeCachedSheet(2, 2, 4, 4, "testdata/4px-2x2-small.png")
-	css := ss.(CachedSpriteSheet)
 
-	s1 := css.GetSprite(0)
-	s2 := css.GetSprite(0)
+	s1 := ss.GetSprite(0)
+	s2 := ss.GetSprite(0)
 
 	assert.Equal(t, *s1, *s2)
 	assert.Equal(t, fmt.Sprintf("%p", s1), fmt.Sprintf("%p", s2))

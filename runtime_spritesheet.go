@@ -24,11 +24,13 @@ func BuildRuntimeSpriteSheet(pics []*pixel.PictureData) (SpriteSheet, error) {
 	packr := packer.NewPacker(0, 0, packer.AllowGrowth)
 
 	for _, pic := range pics { //TODO make optionally concurrent
-		err := packr.InsertPictureDataV(packr.GenerateId(), pic, packer.OptimizeOnInsert) //TODO waiting on https://github.com/dusk125/pixelutils/pull/1
+		err := packr.InsertPictureData(packr.GenerateId(), pic) //TODO waiting on https://github.com/dusk125/pixelutils/pull/1
 		if err != nil {
 			return nil, err
 		}
 	}
+
+	packr.Optimize()
 
 	sheet := RuntimeSpriteSheet{
 		packr: packr,
