@@ -2,6 +2,8 @@ github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dusk125/pixelutils v0.0.0-20200907213001-775eb5d7931f h1:DwaOLqGC5X9kk8hr+Lr6l7iIDqBOnyfxSDe5D/V6UtM=
 github.com/dusk125/pixelutils v0.0.0-20200907213001-775eb5d7931f/go.mod h1:H3kaIxQsgaAwKzofsURF2u2cTXofMviwDQV3RfLz/ss=
+github.com/dusk125/pixelutils v0.0.0-20210328030132-9e4d5f56d9f6 h1:d9EllI5Leh5vaM+TGtGy/2g5A3QOaI06I6O29yDg+gU=
+github.com/dusk125/pixelutils v0.0.0-20210328030132-9e4d5f56d9f6/go.mod h1:H3kaIxQsgaAwKzofsURF2u2cTXofMviwDQV3RfLz/ss=
 github.com/faiface/glhf v0.0.0-20181018222622-82a6317ac380 h1:FvZ0mIGh6b3kOITxUnxS3tLZMh7yEoHo75v3/AgUqg0=
 github.com/faiface/glhf v0.0.0-20181018222622-82a6317ac380/go.mod h1:zqnPFFIuYFFxl7uH2gYByJwIVKG7fRqlqQCbzAnHs9g=
 github.com/faiface/mainthread v0.0.0-20171120011319-8b78f0a41ae3 h1:baVdMKlASEHrj19iqjARrPbaRisD7EuZEVJj6ZMLl1Q=
@@ -21,6 +23,7 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/pzsz/voronoi v0.0.0-20130609164533-4314be88c79f h1:YeUeWAPTrycaikVXiVoAu1dxIR4+tSsn9IbTkNfRsss=
 github.com/pzsz/voronoi v0.0.0-20130609164533-4314be88c79f/go.mod h1:T6EcHUIQ7r0Xr1jjOJ7hmpUaqVyqb9WimeNzS9nz4Zo=
+github.com/stretchr/objx v0.1.0 h1:4G4v2dO3VZwixGIRoQ5Lfboy6nUhCyYzaqnIAPPhYs4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
 github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=

@@ -5,8 +5,29 @@ import (
 	"github.com/faiface/pixel"
 )
 
+//BuildRuntimeSpriteSheet will build a spritesheet from the supplied []*pixel.PictureData. The ids will be assigned in order
+func BuildRuntimeSpriteSheet(pics ...*pixel.PictureData) (SpriteSheet, error) {
+	packr := packer.NewPacker(0, 0, packer.AllowGrowth)
+
+	for _, pic := range pics {
+		packr.InsertPictureData(packr.GenerateId(), pic)
+	}
+
+	packr.Optimize()
+
+	sheet := RuntimeSpriteSheet{
+		packr:  packr,
+		length: len(pics),
+		Cache:  make(map[interface{}]*pixel.Sprite),
+	}
+
+	return &sheet, nil
+}
+
 type RuntimeSpriteSheet struct {
-	packr *packer.Packer
+	Cache  map[interface{}]*pixel.Sprite
+	packr  *packer.Packer
+	length int
 }
 
 func (rss *RuntimeSpriteSheet) SourcePic() pixel.Picture {
@@ -15,26 +36,12 @@ func (rss *RuntimeSpriteSheet) SourcePic() pixel.Picture {
 
 //GetSprite will return the sprite in the Cache (or create&add it to the Cache) from the given int id
 func (rss *RuntimeSpriteSheet) GetSprite(id interface{}) *pixel.Sprite {
-	rss.packr.SpriteFrom(id.(int))
-	return nil
-}
+	sprite := rss.Cache[id]
 
-//BuildRuntimeSpriteSheet will build a spritesheet from the supplied []*pixel.PictureData. The ids will be assigned in order
-func BuildRuntimeSpriteSheet(pics []*pixel.PictureData) (SpriteSheet, error) {
-	packr := packer.NewPacker(0, 0, packer.AllowGrowth)
-
-	for _, pic := range pics { //TODO make optionally concurrent
-		err := packr.InsertPictureData(packr.GenerateId(), pic) //TODO waiting on https://github.com/dusk125/pixelutils/pull/1
-		if err != nil {
-			return nil, err
-		}
+	if sprite == nil {
+		sprite = rss.packr.SpriteFrom(id.(int))
+		rss.Cache[id] = sprite
 	}
 
-	packr.Optimize()
-
-	sheet := RuntimeSpriteSheet{
-		packr: packr,
-	}
-
-	return &sheet, nil
+	return sprite
 }
