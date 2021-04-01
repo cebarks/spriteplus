@@ -39,7 +39,7 @@ func MakeBasicAnimation(sprites []*pixel.Sprite, frameLength int) Animation {
 	targetBounds := sprites[0].Picture().Bounds()
 	for _, sp := range sprites {
 		if sp.Picture().Bounds() != targetBounds {
-			panic("Tried to make BasicAnimation from non-consistent sprite sizes.")
+			panic("Tried to make BasicAnimation from non-consistent sprite sizes.") //TODO return errror instead of panic
 		}
 	}
 	return &BasicAnimation{
