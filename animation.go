@@ -50,7 +50,7 @@ func MakeBasicAnimation(sprites []*pixel.Sprite, frameLength int) Animation {
 	}
 }
 
-func MakeBasicAnimationFromSheet(ss SpriteSheet, ids []interface{}, frameLength int) Animation {
+func MakeBasicAnimationFromSheet(ss SpriteSheet, ids []string, frameLength int) Animation {
 	var sprites []*pixel.Sprite
 	for _, id := range ids {
 		sprites = append(sprites, ss.GetSprite(id))
