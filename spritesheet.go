@@ -26,12 +26,12 @@ type SpriteSheet struct {
 	packr *packer.Packer
 }
 
-func (ss *SpriteSheet) AddSprite(pic *pixel.PictureData, id string) error {
+func (ss *SpriteSheet) AddSprite(pic pixel.Picture, id string) error {
 	intId := ss.packr.GenerateId()
 
 	ss.Alias[id] = intId
 
-	err := ss.packr.InsertPictureDataV(intId, pic, packer.OptimizeOnInsert)
+	err := ss.packr.InsertPictureDataV(intId, pic.(*pixel.PictureData), packer.OptimizeOnInsert)
 
 	ss.Cache[id] = ss.packr.SpriteFrom(ss.Alias[id])
 
