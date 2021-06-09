@@ -17,6 +17,8 @@ func NewSpriteSheet(allowGrowth bool) *SpriteSheet {
 
 	return &SpriteSheet{
 		packr: packer.NewPacker(256, 256, flags),
+		Alias: make(map[string]int),
+		Cache: make(map[interface{}]*pixel.Sprite),
 	}
 }
 
@@ -128,7 +130,7 @@ func (ss *SpriteSheet) GetSprite(id string) *pixel.Sprite {
 	return sprite
 }
 
-//GetSourcePic returns the underlying pixel.Picture of the spritesheet
-func (ss SpriteSheet) GetSourcePic() pixel.Picture {
+//SourcePic returns the underlying pixel.Picture of the spritesheet
+func (ss SpriteSheet) SourcePic() pixel.Picture {
 	return ss.packr.Picture()
 }
