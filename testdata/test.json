@@ -1,0 +1,29 @@
+{
+  "image":"4px-2x2-small.png",
+  "tile-height":4,
+  "tile-width":4,
+  "rows":2,
+  "columns":2,
+  "index": [
+    {
+      "id":"red",
+      "x":0,
+      "y":0
+    },
+    {
+      "id":"green",
+      "x":1,
+      "y":0
+    },
+    {
+      "id":"blue",
+      "x":0,
+      "y":1
+    },
+    {
+      "id":"yellow",
+      "x":1,
+      "y":1
+    }
+  ]
+}

@@ -10,5 +10,6 @@ require (
 	github.com/go-gl/mathgl v1.0.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pzsz/voronoi v0.0.0-20130609164533-4314be88c79f // indirect
-	golang.org/x/image v0.0.0-20210504121937-7319ad40d33e // indirect
+	github.com/stretchr/testify v1.7.0 // indirect
+	golang.org/x/image v0.0.0-20210607152325-775e3b0c77b9 // indirect
 )

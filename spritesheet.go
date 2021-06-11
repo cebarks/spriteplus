@@ -1,9 +1,9 @@
 package spriteplus
 
 import (
-	"fmt"
 	"image"
 
+	"github.com/cebarks/spriteplus/tileset"
 	"github.com/dusk125/pixelutils/packer"
 	"github.com/faiface/pixel"
 )
@@ -44,8 +44,8 @@ func (ss *SpriteSheet) AddSprite(pic pixel.Picture, id string) error {
 	return nil
 }
 
-//AddTileset parses the tiles from a tileset and adds them to this spritesheet
-func (ss *SpriteSheet) AddTileset(img image.Image, ids []string, tileHeight, tileWidth, rows, columns int) (int, error) {
+//AddTilesetRaw parses the tiles from a tileset and adds them to this spritesheet
+func (ss *SpriteSheet) AddTilesetRaw(img image.Image, ids []string, tileHeight, tileWidth, rows, columns int) (int, error) {
 	var tilesFound, index int
 
 	for x := 0; x < rows; x++ {
@@ -55,7 +55,7 @@ func (ss *SpriteSheet) AddTileset(img image.Image, ids []string, tileHeight, til
 			maxX := (x + 1) * tileHeight
 			maxY := (y + 1) * tileWidth
 
-			sub, err := subimage(img, minX, minY, maxX, maxY)
+			sub, err := Subimage(img, minX, minY, maxX, maxY)
 			if err != nil {
 				return -1, err
 			}
@@ -71,51 +71,12 @@ func (ss *SpriteSheet) AddTileset(img image.Image, ids []string, tileHeight, til
 	return tilesFound, nil
 }
 
-//subimage returns a subimage of the given image.Image
-func subimage(img image.Image, minX, minY, maxX, maxY int) (image.Image, error) {
-	return subimageRect(img, image.Rect(minX, minY, maxX, maxY))
-}
-
-//subimageRect returns a subimage of the given image.Image
-func subimageRect(img image.Image, rect image.Rectangle) (image.Image, error) {
-	var sub image.Image
-
-	switch img.(type) {
-	case *image.RGBA:
-		i := img.(*image.RGBA)
-		sub = i.SubImage(rect)
-	case *image.RGBA64:
-		i := img.(*image.RGBA64)
-		sub = i.SubImage(rect)
-	case *image.NRGBA:
-		i := img.(*image.NRGBA)
-		sub = i.SubImage(rect)
-	case *image.NRGBA64:
-		i := img.(*image.NRGBA64)
-		sub = i.SubImage(rect)
-	case *image.Alpha:
-		i := img.(*image.Alpha)
-		sub = i.SubImage(rect)
-	case *image.Alpha16:
-		i := img.(*image.Alpha16)
-		sub = i.SubImage(rect)
-	case *image.Gray:
-		i := img.(*image.Gray)
-		sub = i.SubImage(rect)
-	case *image.Gray16:
-		i := img.(*image.Gray16)
-		sub = i.SubImage(rect)
-	case *image.CMYK:
-		i := img.(*image.CMYK)
-		sub = i.SubImage(rect)
-	case *image.Paletted:
-		i := img.(*image.Paletted)
-		sub = i.SubImage(rect)
-	default:
-		return nil, fmt.Errorf("Couldn't cast type of img. Unknown type: %T", img)
+func (ss *SpriteSheet) AddTileseFromPath(path string) (int, error) {
+	ts, err := tileset.TilesetFromPath(path)
+	if err != nil {
+		return -1, err
 	}
-
-	return sub, nil
+	return ss.AddTilesetRaw(ts.Image, ts.Ids(), ts.TileHeight, ts.TileWidth, ts.Rows, ts.Columns)
 }
 
 //GetSprite will return the sprite in the Cache (or create&add it to the Cache) from the given int id
