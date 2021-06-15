@@ -71,7 +71,7 @@ func (ss *SpriteSheet) AddTilesetRaw(img image.Image, ids []string, tileHeight, 
 	return tilesFound, nil
 }
 
-func (ss *SpriteSheet) AddTileseFromPath(path string) (int, error) {
+func (ss *SpriteSheet) AddTilesetFromPath(path string) (int, error) {
 	ts, err := tileset.TilesetFromPath(path)
 	if err != nil {
 		return -1, err
