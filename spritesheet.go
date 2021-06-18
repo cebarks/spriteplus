@@ -8,11 +8,15 @@ import (
 	"github.com/faiface/pixel"
 )
 
-func NewSpriteSheet(allowGrowth bool) *SpriteSheet {
+func NewSpriteSheet(allowGrowth bool, debugDraw bool) *SpriteSheet {
 	var flags uint8 = 0
 
 	if allowGrowth {
 		flags |= packer.AllowGrowth
+	}
+
+	if debugDraw {
+		flags |= packer.DebugDraw
 	}
 
 	return &SpriteSheet{
