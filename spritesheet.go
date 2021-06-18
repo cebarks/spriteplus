@@ -18,12 +18,12 @@ func NewSpriteSheet(allowGrowth bool) *SpriteSheet {
 	return &SpriteSheet{
 		packr: packer.NewPacker(256, 256, flags),
 		Alias: make(map[string]int),
-		Cache: make(map[interface{}]*pixel.Sprite),
+		Cache: make(map[string]*pixel.Sprite),
 	}
 }
 
 type SpriteSheet struct {
-	Cache map[interface{}]*pixel.Sprite
+	Cache map[string]*pixel.Sprite
 	Alias map[string]int
 	packr *packer.Packer
 }
