@@ -54,8 +54,8 @@ func (ss *SpriteSheet) AddTilesetRaw(img image.Image, ids []string, tileHeight, 
 
 	for x := 0; x < rows; x++ {
 		for y := 0; y < columns; y++ {
-			minX := (x) * tileHeight
-			minY := (y) * tileWidth
+			minX := x * tileHeight
+			minY := y * tileWidth
 			maxX := (x + 1) * tileHeight
 			maxY := (y + 1) * tileWidth
 
