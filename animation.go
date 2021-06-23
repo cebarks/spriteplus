@@ -4,13 +4,7 @@ import (
 	"github.com/faiface/pixel"
 )
 
-//Animation represents a multi-frame sprite
-type Animation interface {
-	Update()
-	Draw(target pixel.Target, mat pixel.Matrix)
-}
-
-type BasicAnimation struct {
+type Animation struct {
 	sprites            []*pixel.Sprite
 	currentSpriteIndex int
 
@@ -20,29 +14,31 @@ type BasicAnimation struct {
 	updateCounter int
 }
 
-func (ba *BasicAnimation) Update() {
-	ba.updateCounter++
-	if ba.updateCounter >= ba.frameLength {
-		ba.updateCounter = 0
+//Next moves the animation to the next frame.
+func (ba *Animation) Next() {
+	if ba.currentSpriteIndex++; ba.currentSpriteIndex > len(ba.sprites) {
+		ba.currentSpriteIndex = 0
+	}
 
-		if ba.currentSpriteIndex++; ba.currentSpriteIndex > len(ba.sprites) {
-			ba.currentSpriteIndex = 0
-		}
+}
+
+func (ba *Animation) Draw(target pixel.Target, mat pixel.Matrix) {
+	ba.sprites[ba.currentSpriteIndex].Draw(target, mat)
+
+	if ba.updateCounter++; ba.updateCounter >= ba.frameLength {
+		ba.updateCounter = 0
+		ba.Next()
 	}
 }
 
-func (ba *BasicAnimation) Draw(target pixel.Target, mat pixel.Matrix) {
-	ba.sprites[ba.currentSpriteIndex].Draw(target, mat)
-}
-
-func MakeBasicAnimation(sprites []*pixel.Sprite, frameLength int) Animation {
+func MakeAnimation(sprites []*pixel.Sprite, frameLength int) *Animation {
 	targetBounds := sprites[0].Picture().Bounds()
 	for _, sp := range sprites {
 		if sp.Picture().Bounds() != targetBounds {
-			panic("Tried to make BasicAnimation from non-consistent sprite sizes.") //TODO return errror instead of panic
+			panic("Tried to make Animation from non-consistent sprite sizes.") //TODO return errror instead of panic
 		}
 	}
-	return &BasicAnimation{
+	return &Animation{
 		sprites:            sprites,
 		updateCounter:      0,
 		frameLength:        frameLength,
@@ -50,11 +46,11 @@ func MakeBasicAnimation(sprites []*pixel.Sprite, frameLength int) Animation {
 	}
 }
 
-func MakeBasicAnimationFromSheet(ss SpriteSheet, ids []string, frameLength int) Animation {
+func MakeAnimationFromSheet(ss SpriteSheet, ids []string, frameLength int) *Animation {
 	var sprites []*pixel.Sprite
 	for _, id := range ids {
 		sprites = append(sprites, ss.GetSprite(id))
 	}
 
-	return MakeBasicAnimation(sprites, frameLength)
+	return MakeAnimation(sprites, frameLength)
 }
