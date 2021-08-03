@@ -20,4 +20,9 @@ tasks:
   todo:
     desc: find all //TODO comments in the repo
     cmds:
-      - grep -nr --exclude="Taskfile.yml" --exclude-dir=".git" "//TODO" . 
+      - grep -nr --exclude="Taskfile.yml" --exclude-dir=".git" "//TODO" .
+
+  build:
+    desc: build the util binary
+    cmds:
+      - go build -o bin/spriteutil ./cmd/spriteutil

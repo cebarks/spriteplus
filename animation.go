@@ -19,7 +19,6 @@ func (ba *Animation) Next() {
 	if ba.currentSpriteIndex++; ba.currentSpriteIndex > len(ba.sprites) {
 		ba.currentSpriteIndex = 0
 	}
-
 }
 
 func (ba *Animation) Draw(target pixel.Target, mat pixel.Matrix) {
