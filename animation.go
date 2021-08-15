@@ -6,28 +6,30 @@ import (
 	"github.com/faiface/pixel"
 )
 
+//Animation is a series of sprites that change after a certain number of frames in sequential order
 type Animation struct {
 	sprites            []*pixel.Sprite
 	currentSpriteIndex int
 
 	//frameLength is the number of times Update() is called before the animation moves to the next sprite
 	frameLength int
-	//updateCounter is how many times Update() has been called since the last sprite change
-	updateCounter int
+	//drawCount is how many times Draw() has been called since the last sprite change
+	drawCount int
 }
 
-//Next moves the animation to the next frame.
+//Next force updates the animation to the next frame.
 func (ba *Animation) Next() {
 	if ba.currentSpriteIndex++; ba.currentSpriteIndex > len(ba.sprites) {
 		ba.currentSpriteIndex = 0
 	}
 }
 
+//Draw draws the current sprite to the given target and updates
 func (ba *Animation) Draw(target pixel.Target, mat pixel.Matrix) {
 	ba.sprites[ba.currentSpriteIndex].Draw(target, mat)
 
-	if ba.updateCounter++; ba.updateCounter >= ba.frameLength {
-		ba.updateCounter = 0
+	if ba.drawCount++; ba.drawCount >= ba.frameLength {
+		ba.drawCount = 0
 		ba.Next()
 	}
 }
@@ -42,7 +44,7 @@ func MakeAnimation(sprites []*pixel.Sprite, frameLength int) (*Animation, error)
 	}
 	return &Animation{
 		sprites:            sprites,
-		updateCounter:      0,
+		drawCount:          0,
 		frameLength:        frameLength,
 		currentSpriteIndex: 0,
 	}, nil
