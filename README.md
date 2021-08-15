@@ -20,16 +20,23 @@ import "github.com/cebarks/spriteplus"
 
 ```golang
 //Create your sheet
-sheet := spriteplus.NewBasicSheet(2, 2, 4, 4, "4px-2x2-small.png")
-sheet := spriteplus.NewCachedSheet(2, 2, 4, 4, "4px-2x2-small.png")
+sheet := spriteplus.NewSpriteSheet(false)
 
-//These can be directly drawn to a Window
+//Add your sprites to the sheet
+err := sheet.AddSprite(gopherSprite)
+if err != nil {
+  ...
+}
+
+//Optimize the texture
+sheet.Optimize()
+
+
+//These can be directly drawn to a Window (or any pixel.Target)
 sprite1 := sheet.GetSprite(0) //bottom-left
-sprite2 := sheet.GetSprite(1) //bottom-right
-sprite3 := sheet.GetSprite(2) //top-left
-sprite4 := sheet.GetSprite(3) //top-right
+sprite1.Draw(win, pixel.IM)
 
-// or you can draw them to a batch (or any pixel.Target) using sheet.SourcePic()
+// or you can efficiently draw them using a batch with sheet.SourcePic()
 pic := sheet.SourcePic()
 batch := pixel.NewBatch(&pixel.TrianglesData{}, pic)
 
@@ -39,33 +46,8 @@ sprite3.Draw(batch, pixel.IM)
 sprite4.Draw(batch, pixel.IM)
 
 
-batch.Draw(...
+batch.Draw(win, pixel.IM)
 ```
-
-#### `BasicSpriteSheet`
-This is the most basic implementation of a sprite sheet. It has not bells or whistles.
-The sprites on the sheet must all be square, of the same size, and aligned neatly to a grid.
-**This is nothing more than the bare minimum to implement a functional `SpriteSheet`, a `CachedSpriteSheet` should almost always be prefered.**
-
-#### `CachedSpriteSheet`
-This is the same as a `BasicSpriteSheet` except the `GetSprite()` method uses a map to cache the `*pixel.Sprite` that are created instead of a new one being created every time the method is called.
-
-#### `RuntimeSpriteSheet` - Unfinished
-Uses [pixelutils'](https://github.com/dusk125/pixelutils) [packer](https://github.com/dusk125/pixelutils/wiki/Texture-Sprite-Packer) package to allow a spritesheet to be packed and created at runtime from a slice of `*pixel.PictureData`.
-
-
-### Animations
-`Animation`: an animation represents a multi-frame animation.
-
-#### `BasicAnimation`
-An `Animation` built from a slice of `*pixel.Sprite`. Simple and probably inefficient. 
-
----
-
-## TODO Features
-#### `SheetAnimation`
-    - an `Animation` built from a slice of IDs from and graphically backed by a sprite sheets
-
 ---
 
 ## Contributing
