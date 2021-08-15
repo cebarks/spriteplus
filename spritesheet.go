@@ -5,12 +5,11 @@ import (
 	"github.com/faiface/pixel"
 )
 
-func NewSpriteSheet(allowGrowth bool, debugDraw bool) *SpriteSheet {
+//NewSpriteSheet creates a new instatiated sprite sheet
+func NewSpriteSheet(debugDraw bool) *SpriteSheet {
 	var flags uint8 = 0
 
-	if allowGrowth {
-		flags |= packer.AllowGrowth
-	}
+	flags |= packer.AllowGrowth
 
 	if debugDraw {
 		flags |= packer.DebugDraw
@@ -23,6 +22,7 @@ func NewSpriteSheet(allowGrowth bool, debugDraw bool) *SpriteSheet {
 	}
 }
 
+//SpriteSheet
 type SpriteSheet struct {
 	Cache map[string]*pixel.Sprite
 	Alias map[string]int
@@ -34,15 +34,19 @@ func (ss *SpriteSheet) AddSprite(pic pixel.Picture, id string) error {
 
 	ss.Alias[id] = intId
 
-	err := ss.Packr.InsertPictureDataV(intId, pic.(*pixel.PictureData), packer.OptimizeOnInsert)
-
-	ss.Cache[id] = ss.Packr.SpriteFrom(ss.Alias[id])
-
+	err := ss.Packr.InsertPictureDataV(intId, pic.(*pixel.PictureData), 0)
 	if err != nil {
 		return err
 	}
 
+	ss.Cache[id] = ss.Packr.SpriteFrom(ss.Alias[id])
+
 	return nil
+}
+
+//Optimize the underlying texture
+func (ss *SpriteSheet) Optimize() {
+	ss.Packr.Optimize()
 }
 
 //GetSprite will return the sprite in the Cache (or create&add it to the Cache) from the given int id
@@ -57,7 +61,7 @@ func (ss *SpriteSheet) GetSprite(id string) *pixel.Sprite {
 	return sprite
 }
 
-//SourcePic returns the underlying pixel.Picture of the spritesheet
+//SourcePic returns the underlying pixel.Picture of the spritesheet (for sure with Batch rendering)
 func (ss SpriteSheet) SourcePic() pixel.Picture {
 	return ss.Packr.Picture()
 }
