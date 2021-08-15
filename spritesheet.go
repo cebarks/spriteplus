@@ -1,9 +1,6 @@
 package spriteplus
 
 import (
-	"image"
-
-	"github.com/cebarks/spriteplus/tileset"
 	"github.com/dusk125/pixelutils/packer"
 	"github.com/faiface/pixel"
 )
@@ -46,41 +43,6 @@ func (ss *SpriteSheet) AddSprite(pic pixel.Picture, id string) error {
 	}
 
 	return nil
-}
-
-//AddTilesetRaw parses the tiles from a tileset and adds them to this spritesheet
-func (ss *SpriteSheet) AddTilesetRaw(img image.Image, ids []string, tileHeight, tileWidth, rows, columns int) (int, error) {
-	var tilesFound, index int
-
-	for x := 0; x < rows; x++ {
-		for y := 0; y < columns; y++ {
-			minX := x * tileHeight
-			minY := y * tileWidth
-			maxX := (x + 1) * tileHeight
-			maxY := (y + 1) * tileWidth
-
-			sub, err := Subimage(img, minX, minY, maxX, maxY)
-			if err != nil {
-				return -1, err
-			}
-
-			pic := pixel.PictureDataFromImage(sub)
-
-			ss.AddSprite(pic, ids[index])
-
-			index++
-		}
-	}
-
-	return tilesFound, nil
-}
-
-func (ss *SpriteSheet) AddTilesetFromPath(path string) (int, error) {
-	ts, err := tileset.TilesetFromPath(path)
-	if err != nil {
-		return -1, err
-	}
-	return ss.AddTilesetRaw(ts.Image, ts.Ids(), ts.TileHeight, ts.TileWidth, ts.Rows, ts.Columns)
 }
 
 //GetSprite will return the sprite in the Cache (or create&add it to the Cache) from the given int id
