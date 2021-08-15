@@ -1,6 +1,8 @@
 package spriteplus
 
 import (
+	"fmt"
+
 	"github.com/faiface/pixel"
 )
 
@@ -30,11 +32,12 @@ func (ba *Animation) Draw(target pixel.Target, mat pixel.Matrix) {
 	}
 }
 
-func MakeAnimation(sprites []*pixel.Sprite, frameLength int) *Animation {
+//MakeAnimation builds an animation from the given sprite sprites and frame lengths.
+func MakeAnimation(sprites []*pixel.Sprite, frameLength int) (*Animation, error) {
 	targetBounds := sprites[0].Picture().Bounds()
-	for _, sp := range sprites {
+	for index, sp := range sprites {
 		if sp.Picture().Bounds() != targetBounds {
-			panic("Tried to make Animation from non-consistent sprite sizes.") //TODO return errror instead of panic
+			return nil, fmt.Errorf("tried to make Animation from non-consistent sprite size at index: %v", index)
 		}
 	}
 	return &Animation{
@@ -42,10 +45,11 @@ func MakeAnimation(sprites []*pixel.Sprite, frameLength int) *Animation {
 		updateCounter:      0,
 		frameLength:        frameLength,
 		currentSpriteIndex: 0,
-	}
+	}, nil
 }
 
-func MakeAnimationFromSheet(ss SpriteSheet, ids []string, frameLength int) *Animation {
+//MakeAnimation builds an animation using sprites pulled from the given spritesheet using the given ids and frame lengths.
+func MakeAnimationFromSheet(ss SpriteSheet, ids []string, frameLength int) (*Animation, error) {
 	var sprites []*pixel.Sprite
 	for _, id := range ids {
 		sprites = append(sprites, ss.GetSprite(id))
