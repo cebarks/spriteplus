@@ -33,7 +33,7 @@ sheet.Optimize()
 
 
 //These can be directly drawn to a Window (or any pixel.Target)
-sprite := sheet.GetSprite(""gopher) 
+sprite := sheet.GetSprite("gopher") 
 sprite.Draw(win, pixel.IM)
 
 // or you can efficiently draw them using a batch with sheet.SourcePic()
