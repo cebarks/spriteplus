@@ -19,7 +19,7 @@ type Animation struct {
 
 //Next force updates the animation to the next frame.
 func (ba *Animation) Next() {
-	if ba.currentSpriteIndex++; ba.currentSpriteIndex > len(ba.sprites) {
+	if ba.currentSpriteIndex++; ba.currentSpriteIndex >= len(ba.sprites) {
 		ba.currentSpriteIndex = 0
 	}
 }
@@ -50,7 +50,7 @@ func MakeAnimation(sprites []*pixel.Sprite, frameLength int) (*Animation, error)
 	}, nil
 }
 
-//MakeAnimation builds an animation using sprites pulled from the given spritesheet using the given ids and frame lengths.
+//MakeAnimationFromSheet builds an animation using sprites pulled from the given spritesheet using the given ids and frame lengths.
 func MakeAnimationFromSheet(ss SpriteSheet, ids []string, frameLength int) (*Animation, error) {
 	var sprites []*pixel.Sprite
 	for _, id := range ids {
