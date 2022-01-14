@@ -1,23 +1,20 @@
 package spriteplus
 
 import (
+	"image"
+
+	"github.com/dusk125/pixelutils"
 	"github.com/dusk125/pixelutils/packer"
 	"github.com/faiface/pixel"
 )
 
 //NewSpriteSheet creates a new instatiated sprite sheet
 func NewSpriteSheet(debugDraw bool) *SpriteSheet {
-	var flags uint8 = 0
-
-	flags |= packer.AllowGrowth
-
-	if debugDraw {
-		flags |= packer.DebugDraw
-	}
 
 	return &SpriteSheet{
-		Packr: packer.NewPacker(256, 256, flags),
+		Packr: packer.New(),
 		Alias: make(map[string]int),
+		idGen: &pixelutils.IDGen{},
 		Cache: make(map[string]*pixel.Sprite),
 	}
 }
@@ -26,27 +23,28 @@ func NewSpriteSheet(debugDraw bool) *SpriteSheet {
 type SpriteSheet struct {
 	Cache map[string]*pixel.Sprite
 	Alias map[string]int
+	idGen *pixelutils.IDGen
 	Packr *packer.Packer
 }
 
-func (ss *SpriteSheet) AddSprite(pic pixel.Picture, id string) error {
-	intId := ss.Packr.GenerateId()
+func (ss *SpriteSheet) AddSprite(pic *image.RGBA, id string) error {
+	ss.idGen.Lock()
+	intId := ss.idGen.Gen()
+	ss.idGen.Unlock()
 
 	ss.Alias[id] = intId
 
-	err := ss.Packr.InsertPictureDataV(intId, pic.(*pixel.PictureData), 0)
-	if err != nil {
+	ss.Packr.Insert(intId, pic)
+
+	if err := ss.Packr.Pack(); err != nil {
 		return err
 	}
 
-	ss.Cache[id] = ss.Packr.SpriteFrom(ss.Alias[id])
+	ss.Packr.Get(intId)
+
+	ss.Cache[id] = pixel.NewSprite(ss.Packr.Picture(), )
 
 	return nil
-}
-
-//Optimize the underlying texture
-func (ss *SpriteSheet) Optimize() {
-	ss.Packr.Optimize()
 }
 
 //GetSprite will return the sprite in the Cache (or create&add it to the Cache) from the given int id
@@ -54,6 +52,7 @@ func (ss *SpriteSheet) GetSprite(id string) *pixel.Sprite {
 	sprite := ss.Cache[id]
 
 	if sprite == nil {
+		sprite = ss.Packr.Get()
 		sprite = ss.Packr.SpriteFrom(ss.Alias[id])
 		ss.Cache[id] = sprite
 	}
